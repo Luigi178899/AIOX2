@@ -1,0 +1,31 @@
+active_ides:
+  - claude
+  - cursor
+  - gemini
+
+squad_aliases:
+  meu-squad-trabalho: Trabalho
+
+sync_mappings:
+  squad_agents:
+    source: 'squads/*/agents/'
+    destinations:
+      claude:
+        - path: '.claude/commands/{squad_alias}/agents/'
+          format: 'md'
+      cursor:
+        - path: '.cursor/rules/'
+          format: 'mdc'
+          wrapper: 'cursor-rule'
+      gemini:
+        - path: '.gemini/agents/'
+          format: 'md'
+  squad_tasks:
+    source: 'squads/*/tasks/'
+    destinations:
+      claude:
+        - path: '.claude/commands/{squad_alias}/tasks/'
+          format: 'md'
+      gemini:
+        - path: '.gemini/tasks/'
+          format: 'md'

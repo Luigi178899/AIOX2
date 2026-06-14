@@ -1,0 +1,12 @@
+name: Research and Verify
+id: research-and-verify
+description: Workflow que coordena a pesquisa técnica profunda seguida pela validação de rigor e qualidade.
+steps:
+  - id: technical-research
+    name: Pesquisa de Domínio
+    agent: specialist
+    task: researcher-task
+  - id: quality-verification
+    name: Verificação de Rigor
+    agent: specialist
+    task: specialist-task

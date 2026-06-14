@@ -11,6 +11,11 @@ Squad especializado em análise técnica profunda e pesquisa de domínio.
 - `*research`: Executa pesquisa técnica externa.
 - `*example-task`: Validação de infraestrutura.
 
+## 🤖 IDE Sync
+- **Claude Code**: `/Trabalho:agents:specialist`
+- **Cursor**: `@specialist`
+- **Gemini**: `.gemini/agents/`
+
 ## 🛠️ Stack Técnica
 - Node.js v20+
 - AIOX Core 2.1

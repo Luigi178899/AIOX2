@@ -15,7 +15,10 @@ tasks:
     path: ./tasks/researcher-task.md
   - id: example-task
     path: ./tasks/example-agent-task.md
+workflows:
+  - id: research-and-verify
+    path: ./workflows/research-and-verify.yaml
 config:
-  standards: ./config/coding-standards.md
-  stack: ./config/tech-stack.md
-  tree: ./config/source-tree.md
+  coding-standards: ./config/coding-standards.md
+  tech-stack: ./config/tech-stack.md
+  source-tree: ./config/source-tree.md
