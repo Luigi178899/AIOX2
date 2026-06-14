@@ -1,0 +1,13 @@
+{
+  "name": "checklist-helper",
+  "version": "1.0.0",
+  "role": "Gerador de Checklists Técnicos e Divisor de Tarefas",
+  "description": "Agente focado em analisar requisições de desenvolvimento e quebrá-las em checklists sequenciais no padrão markdown pronto para execução.",
+  "tools": [
+    "file_reader",
+    "prompt_compiler"
+  ],
+  "model": "gemini-1.5-flash",
+  "temperature": 0.5,
+  "system_instructions_file": "prompt.md"
+}
