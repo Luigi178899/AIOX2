@@ -1,0 +1,29 @@
+name: meu-squad-trabalho
+id: meu-squad-trabalho
+version: 1.0.0
+description: Squad especializado em análise de domínio e pesquisa técnica.
+author: Luigi
+agents:
+  - id: specialist
+    path: ./agents/specialist.md
+  - id: example-agent
+    path: ./agents/example-agent.md
+tasks:
+  - id: specialist-task
+    path: ./tasks/specialist-workflow.md
+  - id: researcher-task
+    path: ./tasks/researcher-task.md
+  - id: example-task
+    path: ./tasks/example-agent-task.md
+workflows:
+  - id: research-and-verify
+    path: ./workflows/research-and-verify.yaml
+config:
+  coding-standards: ./config/coding-standards.md
+  tech-stack: ./config/tech-stack.md
+  source-tree: ./config/source-tree.md
+components:
+  tasks:
+    - specialist-synthesize-findings.md
+  agents:
+    - specialist-assistant.md

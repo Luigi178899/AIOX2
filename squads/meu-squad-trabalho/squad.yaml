@@ -1,4 +1,4 @@
-name: Meu Squad de Trabalho
+name: meu-squad-trabalho
 id: meu-squad-trabalho
 version: 1.0.0
 description: Squad especializado em análise de domínio e pesquisa técnica.
@@ -22,3 +22,11 @@ config:
   coding-standards: ./config/coding-standards.md
   tech-stack: ./config/tech-stack.md
   source-tree: ./config/source-tree.md
+components:
+  tasks:
+    - specialist-synthesize-findings.md
+    - specialist-assistant-prepare-handoff.md
+  agents:
+    - specialist-assistant.md
+  data:
+    - monthly-report-performance-incident.yaml

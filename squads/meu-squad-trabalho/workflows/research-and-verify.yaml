@@ -1,12 +1,34 @@
 name: Research and Verify
 id: research-and-verify
-description: Workflow que coordena a pesquisa técnica profunda seguida pela validação de rigor e qualidade.
-steps:
+type: squad-workflow
+description: Workflow que coordena a pesquisa tecnica profunda seguida pela validacao de rigor e qualidade.
+sequence:
   - id: technical-research
-    name: Pesquisa de Domínio
+    name: Pesquisa de Dominio
     agent: specialist
     task: researcher-task
+    action: Produce verified technical research for the requested topic
+    creates: research-report
+  - id: assistant-synthesis
+    name: Sintese Assistida
+    agent: specialist-assistant
+    task: specialist-assistant-prepare-handoff
+    action: Synthesize verified research into actionable findings for specialist review
+    requires: research-report
+    creates: synthesized-findings
+  - id: assistant-precheck
+    name: Precheck de Qualidade
+    agent: specialist-assistant
+    action: Pre-check synthesized findings against the specialist quality gate
+    requires: synthesized-findings
+    validates: synthesized-findings
   - id: quality-verification
-    name: Verificação de Rigor
+    name: Verificacao de Rigor
     agent: specialist
     task: specialist-task
+    action: Validate synthesized findings and issue the final specialist verdict
+    requires: synthesized-findings
+    validates: synthesized-findings
+handoff_prompts:
+  specialist-to-specialist-assistant: "Use the verified research report to synthesize findings, expose open questions, and prepare a concise handoff."
+  specialist-assistant-to-specialist: "Review the synthesized findings, unresolved questions, risks, and precheck notes before final validation."

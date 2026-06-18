@@ -1,0 +1,91 @@
+name: monthly-report-performance-incident
+type: performance-diagnosis-scenario
+version: 1.0.0
+created: 2026-06-18
+
+problem:
+  title: Slow monthly reports endpoint
+  summary: "The /reports/monthly endpoint became slow after a new aggregate query was added."
+  system:
+    runtime: Node.js 20
+    api_framework: Express
+    database: PostgreSQL 15
+  symptom:
+    endpoint: GET /reports/monthly
+    p50_latency_ms: 1800
+    p95_latency_ms: 11200
+    previous_p95_latency_ms: 1400
+    first_seen_after: "Deploy that added monthly revenue aggregation"
+
+request:
+  goal: "Identify the most likely bottleneck and recommend a safe, verifiable correction."
+  constraints:
+    - "Do not recommend a rewrite."
+    - "Prefer changes that can be validated with EXPLAIN ANALYZE."
+    - "Avoid adding cache until the database bottleneck is understood."
+
+database_context:
+  tables:
+    orders:
+      estimated_rows: 4200000
+      columns:
+        - id uuid primary key
+        - account_id uuid not null
+        - customer_id uuid not null
+        - status text not null
+        - total_cents integer not null
+        - created_at timestamptz not null
+    customers:
+      estimated_rows: 380000
+      columns:
+        - id uuid primary key
+        - account_id uuid not null
+        - plan text not null
+  current_indexes:
+    orders:
+      - "orders_pkey on (id)"
+      - "idx_orders_customer_id on (customer_id)"
+    customers:
+      - "customers_pkey on (id)"
+      - "idx_customers_account_id on (account_id)"
+
+query_under_review: |
+  SELECT
+    date_trunc('month', o.created_at) AS month,
+    c.plan,
+    SUM(o.total_cents) AS revenue_cents,
+    COUNT(*) AS order_count
+  FROM orders o
+  JOIN customers c ON c.id = o.customer_id
+  WHERE o.account_id = $1
+    AND o.status = 'paid'
+    AND o.created_at >= $2
+    AND o.created_at < $3
+  GROUP BY 1, 2
+  ORDER BY 1 DESC;
+
+observations:
+  - "The endpoint is fast for accounts with low order volume."
+  - "The slowest account has about 1.1M paid orders over 18 months."
+  - "Application logs show most latency is spent waiting for the database query."
+  - "No index currently starts with orders.account_id or orders.created_at."
+
+simulated_explain_analyze:
+  planning_time_ms: 1.8
+  execution_time_ms: 9870
+  notable_nodes:
+    - node: "Parallel Seq Scan on orders"
+      detail: "Filter: account_id = $1 AND status = 'paid' AND created_at range"
+      rows_removed_by_filter: 2850000
+    - node: "Hash Join"
+      detail: "Join customers by customer_id/id"
+    - node: "HashAggregate"
+      detail: "Aggregate by date_trunc(month) and customer plan"
+
+expected_specialist_output:
+  must_include:
+    - "Most likely bottleneck"
+    - "Evidence from observations and explain output"
+    - "Recommended index or query adjustment"
+    - "Validation plan"
+    - "Risks and rollback notes"

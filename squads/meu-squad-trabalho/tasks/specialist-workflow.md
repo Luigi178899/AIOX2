@@ -1,5 +1,20 @@
 # Task: Specialist Workflow
 
+task: Specialist Workflow
+responsavel: specialist
+responsavel_type: agent
+atomic_layer: task
+Entrada:
+  - subject: Entity or data to be analyzed
+  - depth: Analysis depth required (standard|deep)
+Saida:
+  - specialist_output: Domain-specific analysis following the specialist output template
+Checklist:
+  - [ ] Load domain context and required tools
+  - [ ] Extract and cross-reference relevant squad documentation
+  - [ ] Generate the requested domain-specific output
+  - [ ] Validate output with checklists/specialist-quality-gate.md
+
 **Task ID:** specialist-task
 **Version:** 1.0
 **Purpose:** Execute domain-specific analysis and implementation

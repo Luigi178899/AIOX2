@@ -1,5 +1,21 @@
 # Task: Researcher Task
 
+task: Researcher Task
+responsavel: specialist
+responsavel_type: agent
+atomic_layer: task
+Entrada:
+  - topic: Technical subject or domain to investigate
+  - depth: Research depth required (standard|exhaustive)
+Saida:
+  - research_report: Actionable research report with risks, benefits, and verified references
+Checklist:
+  - [ ] Scan domain documentation and primary sources
+  - [ ] Extract specific technical details
+  - [ ] Cross-reference findings with config/tech-stack.md
+  - [ ] Produce report using templates/specialist-output-tmpl.md
+  - [ ] Validate report with checklists/specialist-quality-gate.md
+
 **Task ID:** researcher-task
 **Version:** 1.0
 **Purpose:** Conduct deep-dive research into specific technical domains or project requirements to provide high-fidelity context for the squad.
